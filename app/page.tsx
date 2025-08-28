@@ -3,17 +3,42 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Phone, Mail, MapPin, ArrowRight } from "lucide-react"
+import { Phone, Mail, MapPin, ArrowRight, ArrowUp } from "lucide-react"
 import { ClientCarousel } from "@/components/ClientCaroussel"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { content } from "@/lib/utils"
 import { Navbar } from "@/components/Navbar"
+import Link from "next/link"
 
 export default function HomePage() {
   const [language, setLanguage] = useState<"en" | "pt">("en")
+  const [showBackToTop, setShowBackToTop] = useState(false)
+
   const handleLanguageChange = (newLanguage: "en" | "pt") => {
     setLanguage(newLanguage)
   }
+
+  const handleScroll = () => {
+    if (window.scrollY > 300) {
+      setShowBackToTop(true)
+    } else {
+      setShowBackToTop(false)
+    }
+  }
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    })
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
 
   const t = content[language]
 
@@ -125,14 +150,16 @@ export default function HomePage() {
                   {t.hero.subtitle}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-6">
-                  <Button
-                    size="lg"
-                    className="hover:scale-105 hover:cursor-pointer bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 group px-8 py-4 text-lg font-bold relative overflow-hidden"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                    <span className="relative z-10">{t.hero.cta}</span>
-                    <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform relative z-10" />
-                  </Button>
+                  <Link href="/projects">
+                    <Button
+                      size="lg"
+                      className="hover:scale-105 hover:cursor-pointer bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 group px-8 py-4 text-lg font-bold relative overflow-hidden"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                      <span className="relative z-10">{t.hero.cta}</span>
+                      <ArrowRight className="ml-3 h-5 w-5 group-hover:translate-x-2 transition-transform relative z-10" />
+                    </Button>
+                  </Link>
                   <Button
                     size="lg"
                     variant="outline"
@@ -251,7 +278,7 @@ export default function HomePage() {
       </section>
 
       <div className="pb-20">
-        <ClientCarousel />
+        <ClientCarousel language={language} />
       </div>
 
       {/* Enhanced Footer */}
@@ -340,7 +367,7 @@ export default function HomePage() {
                   <div className="flex items-center space-x-4 hover:text-sky-200 transition-colors group">
                     <Mail className="h-6 w-6 text-sky-400 group-hover:scale-110 transition-transform duration-300" />
                     <span className="text-base font-medium">
-                      jc@civica-lda.com
+                      toze@civica-lda.com
                     </span>
                   </div>
                   <div className="flex items-center space-x-4 hover:text-sky-200 transition-colors group">
@@ -360,6 +387,18 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+
+      {/* Back to Top Button */}
+      {showBackToTop && (
+        <Button
+          size="icon"
+          className="back-to-top"
+          onClick={scrollToTop}
+          style={{ display: showBackToTop ? "flex" : "none" }}
+        >
+          <ArrowUp className="h-5 w-5" />
+        </Button>
+      )}
 
       {/* Custom animations and styles */}
       <style jsx>{`

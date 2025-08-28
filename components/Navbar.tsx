@@ -34,24 +34,36 @@ export function Navbar({
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-10">
-            {Object.values(t.nav).map((item, index) => (
-              <a
-                key={index}
-                href={
-                  index === 0
-                    ? "/"
-                    : index === 2
-                    ? "/projects"
-                    : index === 4
-                    ? "/contact"
-                    : `#${Object.keys(t.nav)[index]}`
-                }
-                className="text-slate-700 hover:text-blue-600 transition-all duration-300 hover:scale-110 font-semibold relative group"
-              >
-                {item}
-                <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-sky-600 group-hover:w-full transition-all duration-300"></div>
-              </a>
-            ))}
+            {Object.values(t.nav).map((item, index) => {
+              const key = Object.keys(t.nav)[index]
+              let href = ""
+
+              switch (key) {
+                case "home":
+                  href = "/"
+                  break
+                case "projects":
+                  href = "/projects"
+                  break
+                case "contact":
+                  href = "/contact"
+                  break
+                default:
+                  href = `/#${key}`
+                  break
+              }
+
+              return (
+                <a
+                  key={index}
+                  href={href}
+                  className="text-slate-700 hover:text-blue-600 transition-all duration-300 hover:scale-110 font-semibold relative group"
+                >
+                  {item}
+                  <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-sky-600 group-hover:w-full transition-all duration-300"></div>
+                </a>
+              )
+            })}
           </div>
 
           {/* Language Toggle */}

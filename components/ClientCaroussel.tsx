@@ -1,35 +1,16 @@
 import { useEffect, useState } from "react"
+import { content } from "@/lib/utils"
 
-export function ClientCarousel() {
+interface ClientCarouselProps {
+  language: "en" | "pt"
+}
+
+export function ClientCarousel({ language }: ClientCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isVisible, setIsVisible] = useState(true)
 
-  const clientGroups = [
-    [
-      { name: "Coca-Cola", sector: "Beverage Industry", logo: "🥤" },
-      { name: "Chevron", sector: "Oil & Gas", logo: "🛢️" },
-      { name: "French Embassy", sector: "Diplomatic Mission", logo: "🏛️" },
-      { name: "Sumol+Compal", sector: "Food & Beverage", logo: "🧃" },
-      { name: "Sonangol", sector: "Oil & Gas", logo: "⛽" },
-      { name: "SGS Angola", sector: "Inspection Services", logo: "🔍" },
-    ],
-    [
-      { name: "BNA", sector: "National Bank", logo: "🏦" },
-      { name: "Unitel", sector: "Telecommunications", logo: "📱" },
-      { name: "BAI", sector: "Banking", logo: "💳" },
-      { name: "Standard Bank", sector: "Banking", logo: "🏧" },
-      { name: "ENI Angola", sector: "Oil & Gas", logo: "⛽" },
-      { name: "BP Angola", sector: "Oil & Gas", logo: "🛢️" },
-    ],
-    [
-      { name: "Total Energies", sector: "Oil & Gas", logo: "⚡" },
-      { name: "US Embassy", sector: "Diplomatic Mission", logo: "🏛️" },
-      { name: "Ensa", sector: "Insurance", logo: "🛡️" },
-      { name: "TAAG", sector: "Aviation", logo: "✈️" },
-      { name: "Refriangol", sector: "Cold Storage", logo: "❄️" },
-      { name: "Pumangol", sector: "Fuel Distribution", logo: "⛽" },
-    ],
-  ]
+  const t = content[language]
+  const clientGroups = t.portfolio.clients
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -70,12 +51,11 @@ export function ClientCarousel() {
       <div className="relative z-10">
         <div className="text-center mb-8 md:mb-12">
           <h3 className="text-2xl md:text-3xl font-serif font-bold text-slate-900 mb-4 relative">
-            Our Prestigious Clients
+            {t.portfolio.title}
             <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-20 h-0.5 bg-gradient-to-r from-blue-600 to-sky-600"></div>
           </h3>
           <p className="text-lg md:text-xl text-slate-600">
-            Trusted partnerships with industry leaders and government
-            institutions
+            {t.portfolio.subtitle}
           </p>
         </div>
 
@@ -105,7 +85,7 @@ export function ClientCarousel() {
 
                   {/* Logo/Icon */}
                   <div className="text-2xl md:text-3xl mb-1 relative z-10 group-hover:scale-110 transition-transform duration-300">
-                    {client.logo}
+                    {client.emoji}
                   </div>
 
                   {/* Client name */}

@@ -181,4 +181,13 @@
       linear-gradient(90deg, rgba(37, 99, 235, 0.1) 1px, transparent 1px);
     background-size: 20px 20px;
   }
+
+  /* Added a Back to Top button */
+  .back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    z-index: 100;
+  }
 }
