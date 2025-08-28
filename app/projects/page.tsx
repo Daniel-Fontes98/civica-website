@@ -3,12 +3,10 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Navbar } from "@/components/Navbar"
 import { useState } from "react"
-import { content } from "@/lib/utils"
 import { Building2, Home, Warehouse } from "lucide-react"
 
 export default function ProjectsPage() {
   const [language, setLanguage] = useState<"en" | "pt">("en")
-  const t = content[language]
 
   const handleLanguageChange = (newLanguage: "en" | "pt") => {
     setLanguage(newLanguage)
